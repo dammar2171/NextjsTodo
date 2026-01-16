@@ -8,7 +8,7 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   return (
     <SignupLayout>
-      <form className="flex flex-col bg-[var(--primary)] p-8 rounded-md">
+      <form className="flex flex-col bg-[var(--secondary)] p-8 rounded-md">
         <h1 className="text-2xl font-bold text-center pb-3"> Signup Here</h1>
         <Input
           type="text"
@@ -49,11 +49,14 @@ function Signup() {
         <Input
           type="submit"
           value="Signup"
-          className="w-full p-2 rounded-md  bg-[var(--secondary)] hover:bg-[var(--foreground-disabled)]"
+          className="w-full p-2 rounded-md  bg-[var(--primary)] hover:bg-[var(--hover-bg)]"
         />
-        <p>
+        <p className="text-[14px]">
           If you already have an account.{" "}
-          <a href="#" className="underline ">
+          <a
+            href="#"
+            className="underline text-[14px] hover:text-[var(--primary)]"
+          >
             Click here
           </a>
         </p>

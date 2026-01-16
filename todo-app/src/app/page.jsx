@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <>
       <main
-        className="py-60 flex flex-col items-center"
+        className="flex flex-col justify-center py-36 items-center"
         style={{
           background: "var(--surface)",
           color: "var(--foreground)",
