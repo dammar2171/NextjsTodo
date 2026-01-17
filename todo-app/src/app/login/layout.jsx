@@ -10,7 +10,7 @@ function LoginLayout({ children }) {
     >
       <div className="w-[1000px] mx-auto flex flex-col md:flex-row ">
         <div className="d-none md:block w-full bg-[url('/login.png')] bg-cover bg-center bg-no-repeat"></div>
-        <div className=" w-full mx-auto p-6">{children}</div>
+        <div className=" w-full mx-auto">{children}</div>
       </div>
     </Container>
   );

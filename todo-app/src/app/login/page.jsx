@@ -3,13 +3,24 @@ import { useState } from "react";
 import LoginLayout from "./layout";
 import Input from "@/components/Input";
 import Container from "@/components/Container";
+import Link from "next/link";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(email, password);
+    setEmail("");
+    setPassword("");
+  };
   return (
     <Container className="p-6 max-w-[400px] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1000px] mx-auto">
       <LoginLayout>
-        <form className="flex flex-col bg-[var(--secondary)] p-8 rounded-md">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col bg-[var(--secondary)] p-8 rounded-md"
+        >
           <h1 className="text-2xl font-bold text-center pb-3"> Login Here</h1>
           <Input
             type="text"
@@ -37,17 +48,17 @@ const Login = () => {
           />
           <Input
             type="submit"
-            value="Signup"
+            value="Login"
             className="w-full p-2 rounded-md  bg-[var(--primary)] hover:bg-[var(--hover-bg)]"
           />
           <p className="text-[14px]">
             If you don't have an account.{" "}
-            <a
-              href="#"
+            <Link
+              href="/signup"
               className="underline text-[14px] hover:text-[var(--primary)]"
             >
               Click here
-            </a>
+            </Link>
           </p>
         </form>
       </LoginLayout>

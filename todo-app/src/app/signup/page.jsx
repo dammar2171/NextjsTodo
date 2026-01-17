@@ -2,13 +2,25 @@
 import { useState } from "react";
 import SignupLayout from "./Layout";
 import Input from "@/components/Input";
+import Link from "next/link";
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(email, password, confirmPassword);
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+  };
   return (
     <SignupLayout>
-      <form className="flex flex-col bg-[var(--secondary)] p-8 rounded-md">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col bg-[var(--secondary)] p-8 rounded-md"
+      >
         <h1 className="text-2xl font-bold text-center pb-3"> Signup Here</h1>
         <Input
           type="text"
@@ -53,12 +65,12 @@ function Signup() {
         />
         <p className="text-[14px]">
           If you already have an account.{" "}
-          <a
-            href="#"
+          <Link
+            href="/login"
             className="underline text-[14px] hover:text-[var(--primary)]"
           >
             Click here
-          </a>
+          </Link>
         </p>
       </form>
     </SignupLayout>
