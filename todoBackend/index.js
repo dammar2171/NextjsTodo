@@ -1,10 +1,12 @@
-import express from "express";
+import express, { json } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import userRoute from "./src/routes/user_route.js"
 
 
 dotenv.config();
 const app= express();
+app.use(express.json());
 
 app.use(cors({
   origin:["http://localhost:3000/"],
@@ -13,6 +15,8 @@ app.use(cors({
 }))
 
 const PORT = process.env.PORT || 3000;
+
+app.use("/user",userRoute);
 
 app.listen(PORT,()=>{
   console.log(`Server is running on ${PORT}`);
