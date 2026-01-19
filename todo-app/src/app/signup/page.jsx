@@ -5,7 +5,7 @@ import Input from "@/components/Input";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/store/toastContext";
+import { useToast } from "@/store/ToastContext";
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,6 +36,7 @@ function Signup() {
       }
     } catch (error) {
       console.log("error:", error);
+      addToast("Something went wrong", "error");
     }
   };
   return (

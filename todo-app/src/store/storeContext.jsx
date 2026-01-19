@@ -1,16 +1,16 @@
 "use client";
 import { createContext, useReducer } from "react";
 
-export const storeContext = createContext();
+export const StoreContext = createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
   }
 };
 
-const storeContextProvider = ({ children }) => {
+const StoreContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, []);
 
-  return <storeContext.Provider value={{}}>{children}</storeContext.Provider>;
+  return <StoreContext.Provider value={{}}>{children}</StoreContext.Provider>;
 };
-export default storeContextProvider;
+export default StoreContextProvider;

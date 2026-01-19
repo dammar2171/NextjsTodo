@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState } from "react";
 import Toast from "../components/Toast";
 
-const toastContext = createContext();
+const ToastContext = createContext();
 
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
@@ -21,9 +21,9 @@ export function ToastProvider({ children }) {
   };
 
   return (
-    <toastContext.Provider value={{ addToast }}>
+    <ToastContext.Provider value={{ addToast }}>
       {children}
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-22 right-10 z-50">
         {toasts.map((toast) => (
           <Toast
             key={toast.id}
@@ -32,12 +32,12 @@ export function ToastProvider({ children }) {
           />
         ))}
       </div>
-    </toastContext.Provider>
+    </ToastContext.Provider>
   );
 }
 
 export function useToast() {
-  const context = useContext(toastContext);
+  const context = useContext(ToastContext);
   if (!context) throw new Error("useToast must be used within ToastProvider");
   return context;
 }

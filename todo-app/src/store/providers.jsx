@@ -1,10 +1,11 @@
-import storeContextProvider from "./storeContext";
-import { ToastProvider } from "./toastContext";
+"use client";
+import StoreContextProvider from "./StoreContext";
+import { ToastProvider } from "./ToastContext";
 const Provider = ({ children }) => {
   return (
-    <storeContextProvider>
+    <StoreContextProvider>
       <ToastProvider>{children}</ToastProvider>
-    </storeContextProvider>
+    </StoreContextProvider>
   );
 };
 export default Provider;
