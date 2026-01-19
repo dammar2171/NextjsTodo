@@ -3,17 +3,40 @@ import { useState } from "react";
 import SignupLayout from "./Layout";
 import Input from "@/components/Input";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/store/toastContext";
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const handleSubmit = (e) => {
+  const { addToast } = useToast();
+  const router = useRouter();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password, confirmPassword);
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("");
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/user/signupUser",
+        {
+          email,
+          password,
+          confirmPassword,
+        },
+      );
+      console.log("response:", response);
+      if (response.status === 200) {
+        addToast("User created successfully", "success");
+        router.push("/login");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+      }
+      if (response.status === 400) {
+        addToast("password not matched", "error");
+      }
+    } catch (error) {
+      console.log("error:", error);
+    }
   };
   return (
     <SignupLayout>
