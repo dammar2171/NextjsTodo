@@ -1,6 +1,10 @@
+"use client";
 import Container from "@/components/Container";
 import Link from "next/link";
 import styles from "@/styles/Container.module.css";
+import { useContext } from "react";
+import { AuthContext } from "@/store/AuthContext";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   return (
@@ -23,12 +27,20 @@ const Header = () => {
 };
 
 export default Header;
-
 const Navbar = () => {
+  const router = useRouter();
+  const { authenticated, setAuthenticated } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    setAuthenticated(false);
+    localStorage.removeItem("token");
+    router.push("/login");
+  };
+
   return (
-    <nav className="flex px-2 md:px-4 md:px-0 justify-around md:justify-between items-center gap-3 md:gap-0">
+    <nav className="flex justify-between items-center gap-4 px-4">
       <div
-        className="text-xl md:text-2xl font-extrabold"
+        className="text-2xl font-extrabold"
         style={{ color: "var(--foreground)" }}
       >
         <span
@@ -43,31 +55,46 @@ const Navbar = () => {
         </span>
       </div>
 
-      <ul className="flex gap-4">
-        {[
-          { href: "/", label: "Home" },
-          { href: "/addtodo", label: "Add Todo" },
-          { href: "/todos", label: "Todos" },
-          { href: "/login", label: "Login" },
-        ].map((link) => (
-          <li
-            key={link.href}
-            className="list-none transition-colors duration-300 ease-in-out cursor-pointer"
-            style={{
-              color: "var(--foreground)",
-            }}
-          >
-            <Link
-              href={link.href}
-              className="hover:text-[var(--primary)]"
-              style={{
-                fontSize: "var(--font-size-normal)",
-              }}
-            >
-              {link.label}
+      <ul className="flex gap-4 items-center">
+        <li key="/" className="list-none">
+          <Link href="/" className="hover:text-[var(--primary)]">
+            Home
+          </Link>
+        </li>
+
+        {!authenticated && (
+          <li key="/login" className="list-none">
+            <Link href="/login" className="hover:text-[var(--primary)]">
+              Login
             </Link>
           </li>
-        ))}
+        )}
+
+        {authenticated && (
+          <>
+            <li key="/addtodo" className="list-none">
+              <Link href="/addtodo" className="hover:text-[var(--primary)]">
+                Add Todo
+              </Link>
+            </li>
+            <li key="/todos" className="list-none">
+              <Link href="/todos" className="hover:text-[var(--primary)]">
+                Todos
+              </Link>
+            </li>
+          </>
+        )}
+
+        {authenticated && (
+          <li key="logout" className="list-none">
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+            >
+              Logout
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   );

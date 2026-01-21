@@ -1,10 +1,13 @@
 "use client";
+import AuthContextProvider from "../store/AuthContext";
 import StoreContextProvider from "./StoreContext";
 import { ToastProvider } from "./ToastContext";
 const Provider = ({ children }) => {
   return (
     <StoreContextProvider>
-      <ToastProvider>{children}</ToastProvider>
+      <AuthContextProvider>
+        <ToastProvider>{children}</ToastProvider>
+      </AuthContextProvider>
     </StoreContextProvider>
   );
 };

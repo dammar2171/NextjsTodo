@@ -22,9 +22,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header />
-        <Provider>{children}</Provider>
-        <Footer />
+        <Provider>
+          {" "}
+          <Header />
+          {children}
+          <Footer />
+        </Provider>
       </body>
     </html>
   );

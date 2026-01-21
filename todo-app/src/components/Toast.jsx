@@ -1,6 +1,6 @@
 function Toast({ message, type = "info", onClose, className = "" }) {
   const baseStyle =
-    "p-4 rounded-lg text-white flex justify-between items-center gap-2";
+    "p-4 rounded-lg text-white flex justify-between items-center gap-4";
   const toastType = {
     success: "bg-green-500",
     error: "bg-red-500",

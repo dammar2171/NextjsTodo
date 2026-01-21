@@ -4,13 +4,32 @@ import LoginLayout from "./layout";
 import Input from "@/components/Input";
 import Container from "@/components/Container";
 import Link from "next/link";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/store/ToastContext";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
+  const { addToast } = useToast();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email, password);
+    const res = await axios.post("http://localhost:5000/user/loginUser", {
+      email,
+      password,
+    });
+    console.log("response", res);
+    if (res.status === 200) {
+      addToast("Login Successful", "success");
+      localStorage.setItem("token", res.data.token);
+      router.push("/");
+    }
+
+    if (res.status === 400 || res.status === 404) {
+      addToast(res.data.message, "error");
+    }
     setEmail("");
     setPassword("");
   };
