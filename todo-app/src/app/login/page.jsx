@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LoginLayout from "./layout";
 import Input from "@/components/Input";
 import Container from "@/components/Container";
@@ -7,6 +7,7 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/store/ToastContext";
+import { AuthContext } from "@/store/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,24 +15,29 @@ const Login = () => {
   const router = useRouter();
   const { addToast } = useToast();
 
+  const { setAuthenticated } = useContext(AuthContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.post("http://localhost:5000/user/loginUser", {
-      email,
-      password,
-    });
-    console.log("response", res);
-    if (res.status === 200) {
-      addToast("Login Successful", "success");
-      localStorage.setItem("token", res.data.token);
-      router.push("/");
-    }
+    try {
+      const res = await axios.post("http://localhost:5000/user/loginUser", {
+        email,
+        password,
+      });
+      console.log("response", res);
 
-    if (res.status === 400 || res.status === 404) {
-      addToast(res.data.message, "error");
+      if (res.status === 200) {
+        addToast("Login Successful", "success");
+        localStorage.setItem("token", res.data.token);
+        setAuthenticated(true);
+        router.push("/");
+      }
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.log("ERROR:", error.response.data.message);
+      addToast(error.response.data.message, "error");
     }
-    setEmail("");
-    setPassword("");
   };
   return (
     <Container className="p-6 max-w-[400px] sm:max-w-[600px] md:max-w-[800px] lg:max-w-[1000px] mx-auto">

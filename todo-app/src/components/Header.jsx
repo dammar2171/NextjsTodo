@@ -31,6 +31,8 @@ const Navbar = () => {
   const router = useRouter();
   const { authenticated, setAuthenticated } = useContext(AuthContext);
 
+  console.log("authenticate in header", authenticated);
+
   const handleLogout = () => {
     setAuthenticated(false);
     localStorage.removeItem("token");

@@ -13,7 +13,7 @@ const AuthContextProvider = ({ children }) => {
     } else {
       setAuthenticated(false);
     }
-  }, [authenticated]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ authenticated, setAuthenticated }}>

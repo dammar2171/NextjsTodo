@@ -1,6 +1,19 @@
 "use client";
+import { useRouter } from "next/navigation";
 import TheameSwitcher from "../components/TheameSwitcher";
+import { useContext } from "react";
+import { AuthContext } from "@/store/AuthContext";
 export default function Home() {
+  const router = useRouter();
+  const { authenticated } = useContext(AuthContext);
+
+  const handleGetStarted = () => {
+    if (authenticated) {
+      router.push("/addtodo");
+    } else {
+      router.push("/login");
+    }
+  };
   return (
     <>
       <main
@@ -30,6 +43,7 @@ export default function Home() {
         </div>
         <button
           className="text-center mt-4 w-[200px] mx-auto transition-colors duration-300 ease-in-out cursor-pointer active:scale-95"
+          onClick={handleGetStarted}
           style={{
             background: "var(--primary)",
             color: "var(--background)",
