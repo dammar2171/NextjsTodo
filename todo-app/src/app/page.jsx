@@ -27,13 +27,13 @@ export default function Home() {
           className="font-bold text-center"
           style={{ fontSize: "var(--font-size-heading)" }}
         >
-          Welcome to Todo Application
+          Welcome to Expense Tracker
         </h1>
         <p
           className="text-center mt-2"
           style={{ fontSize: "var(--font-size-normal)" }}
         >
-          Add your todos and manage them
+          Add your expenses and manage them
         </p>
         <div>
           <p className="mb-2" style={{ color: "var(--foreground)" }}>

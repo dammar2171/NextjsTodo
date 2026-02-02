@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 const Header = () => {
   return (
     <header
-      className="py-6 "
+      className="py-4 sm:py-6 "
       style={{
         background: "var(--surface)",
         color: "var(--foreground)",
@@ -42,22 +42,22 @@ const Navbar = () => {
   return (
     <nav className="flex justify-between items-center gap-4 px-4">
       <div
-        className="text-2xl font-extrabold"
+        className="text-[10px] sm:text-2xl font-extrabold"
         style={{ color: "var(--foreground)" }}
       >
         <span
-          className="p-2 rounded-[var(--border-radius)]"
+          className="p-2  rounded-[var(--border-radius)]"
           style={{
             background: "var(--primary)",
             color: "var(--background)",
             boxShadow: "var(--box-shadow)",
           }}
         >
-          TD
+          ETrack
         </span>
       </div>
 
-      <ul className="flex gap-4 items-center">
+      <ul className="flex gap-4 items-center text-[14px] sm:text-[18px]">
         <li key="/" className="list-none">
           <Link href="/" className="hover:text-[var(--primary)]">
             Home
@@ -74,14 +74,14 @@ const Navbar = () => {
 
         {authenticated && (
           <>
-            <li key="/addtodo" className="list-none">
-              <Link href="/addtodo" className="hover:text-[var(--primary)]">
-                Add Todo
+            <li key="/addexpense" className="list-none">
+              <Link href="/addexpense" className="hover:text-[var(--primary)]">
+                Add Expense
               </Link>
             </li>
             <li key="/todos" className="list-none">
               <Link href="/todos" className="hover:text-[var(--primary)]">
-                Todos
+                Expenses List
               </Link>
             </li>
           </>
@@ -91,7 +91,7 @@ const Navbar = () => {
           <li key="logout" className="list-none">
             <button
               onClick={handleLogout}
-              className="px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
+              className="px-2 py-1 sm:py-2 sm:px-4 rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors"
             >
               Logout
             </button>

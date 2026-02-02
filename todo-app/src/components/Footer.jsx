@@ -31,12 +31,12 @@ const Footer = () => {
                 boxShadow: "var(--box-shadow)",
               }}
             >
-              TD
+              ETrack
             </span>
           </div>
           <div>
             <p style={{ fontSize: "var(--font-size-normal)" }}>
-              Copyright © 2026 Todo App
+              Copyright © 2026 Expense Tracker
             </p>
           </div>
           <div>
