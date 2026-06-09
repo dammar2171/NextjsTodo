@@ -4,16 +4,43 @@ import Input from "@/components/Input";
 import React from "react";
 import { useState } from "react";
 import { useToast } from "@/store/ToastContext";
+import axios from "axios";
 
 function AddExpense() {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
-  // const { addToast } = useToast();
-  const handleAddexpense = (e) => {
+  const { addToast } = useToast();
+
+  const handleAddexpense = async (e) => {
     e.preventDefault();
-    console.log(description, amount, date);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      addToast("No token found. Please login first.", "error");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/expense/addExpense",
+        { description, amount, date },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+
+      addToast(response.data.message, "success");
+      setDescription(" ");
+      setAmount(" ");
+      setDate(" ");
+    } catch (error) {
+      console.log("ERROR:", error);
+      addToast(
+        error.response?.data?.message || "Something went wrong",
+        "error",
+      );
+    }
   };
+
   return (
     <Container className="p-2 py-[40px] sm:p-4 md:p-6 md:py-[70px] max-w-full bg-[var(--background)] text-[var(--foreground)]">
       <h1 className="text-2xl text-center font-bold mb-4">Add Expense</h1>

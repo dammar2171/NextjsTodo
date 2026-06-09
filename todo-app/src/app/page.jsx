@@ -9,7 +9,7 @@ export default function Home() {
 
   const handleGetStarted = () => {
     if (authenticated) {
-      router.push("/addtodo");
+      router.push("/addexpense");
     } else {
       router.push("/login");
     }

@@ -79,8 +79,8 @@ const Navbar = () => {
                 Add Expense
               </Link>
             </li>
-            <li key="/todos" className="list-none">
-              <Link href="/todos" className="hover:text-[var(--primary)]">
+            <li key="/showexpense" className="list-none">
+              <Link href="/showexpense" className="hover:text-[var(--primary)]">
                 Expenses List
               </Link>
             </li>

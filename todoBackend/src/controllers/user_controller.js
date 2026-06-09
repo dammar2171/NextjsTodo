@@ -36,7 +36,7 @@ export const loginUser=async(req,res)=>{
       return res.status(400).json({message:"password not matched"});
     }
 
-    const token=jwt.sign({email:user.email},process.env.JWT_SECRET_KEY);
+    const token=jwt.sign({userId:user.id},process.env.JWT_SECRET_KEY,{expiresIn: "7d"});
 
     return res.status(200).json({message:"login successful",token});
   } catch (error) {

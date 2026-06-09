@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import userRoute from "./src/routes/user_route.js"
+import expenseRoute from "./src/routes/expense_route.js"
 
 
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(cors({
 const PORT = process.env.PORT || 3000;
 
 app.use("/user",userRoute);
+app.use("/expense",expenseRoute);
 
 app.listen(PORT,()=>{
   console.log(`Server is running on ${PORT}`);
