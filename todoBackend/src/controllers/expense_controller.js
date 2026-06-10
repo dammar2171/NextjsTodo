@@ -30,3 +30,21 @@ export const fetchExpense = async (req,res) =>{
   }
 
 }
+
+export const deleteExpense = async(req,res)=>{
+  const {id} = req.params;
+  console.log("ID : ",id);
+  
+  const userID = req.user.userId
+  const sql = "DELETE FROM expenses where id = $1 AND user_id =$2;";
+  try {
+    const result = await pool.query(sql,[id,userID])
+    if(result.rowCount === 0){
+      res.status(404).json({message:"Expense not fount or not authorized"});
+    }
+    return res.status(200).json({message:"expense deleted sucessfully"})
+  } catch (error) {
+    console.log("DATABASE_ERROR: ",error);
+    return res.status(500).json({message:"problem in deletion!"})
+  }
+}

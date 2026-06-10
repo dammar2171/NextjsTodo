@@ -8,6 +8,10 @@ const expenseReducer = (state, action) => {
   switch (action.type) {
     case "SET_EXPENSE":
       return action.payload.expense;
+    case "DELETE_EXPENSE":
+      return state.filter((item) => item.id !== action.payload.id);
+    default:
+      return state;
   }
 };
 
@@ -43,8 +47,35 @@ const StoreContextProvider = ({ children }) => {
     fetchExpense();
   }, []);
 
+  const handleDeleteExpense = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(
+        `http://localhost:5000/expense/deleteExpense/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      if (response.status == 200) {
+        console.log("Expense deleted successfully!");
+        dispatch({
+          type: "DELETE_EXPENSE",
+          payload: {
+            id,
+          },
+        });
+      }
+    } catch (error) {
+      console.log("DELETION_ERROR: ", error);
+    }
+  };
+
   return (
-    <StoreContext.Provider value={{ expenseLoading, expense }}>
+    <StoreContext.Provider
+      value={{ expenseLoading, expense, handleDeleteExpense }}
+    >
       {children}
     </StoreContext.Provider>
   );
