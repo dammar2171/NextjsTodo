@@ -52,13 +52,13 @@ export const updateExpense = async(req,res)=>{
   const {description,amount,date} = req.body;
   const {id} = req.params;
   const userID = req.user.userId;
-  const sql = "UPDATE expenses SET description = $1, amount = $2, date = $3 WHERE  id = $4 AND user_id = $5;";
+  const sql = "UPDATE expenses SET description = $1, amount = $2, date = $3 WHERE  id = $4 AND user_id = $5 RETURNING *;";
   try {
     const result = await pool.query(sql,[description,amount,date,id,userID]);
     if(result.rowCount === 0){
       return res.status(400).json({message:"No data found for update"})
     }
-    return res.status(200).json({data:result.rowCount,message:"Expense updated successfully"})
+    return res.status(200).json({data:result.rows[0],message:"Expense updated successfully"})
   } catch (error) {
    console.log("DATABASE_ERROR: ",error);
   }

@@ -13,14 +13,31 @@ const ShowExpense = () => {
     useContext(StoreContext);
   const [editing, setEditing] = useState(false);
   const [editExpense, setEditExpense] = useState(null);
+  const [search, setSearch] = useState("");
+
   const onHandleEdit = (expense) => {
     setEditing(true);
     setEditExpense(expense);
   };
 
+  const onHandleDelete = (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete?");
+    if (confirmed) {
+      handleDeleteExpense(id)
+    }
+  };
+
   const onCancel = () => {
     setEditing(false);
     console.log("clicked");
+  };
+
+  const filteredExpense = expense.filter((item) =>
+    item.description.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  const handleSearch = (e) => {
+    e.preventDefault();
   };
 
   if (expenseLoading) return <Loader />;
@@ -31,7 +48,17 @@ const ShowExpense = () => {
         <h1 className="text-3xl font-bold text-center mb-6">
           Your Total Expense Here:
         </h1>
-
+        <form
+          onSubmit={handleSearch}
+          className="flex flex-row justify-center items-center pb-4 text-xl gap-2"
+        >
+          <input
+            className=" border border-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 w-[400px] h-[40px] rounded-2xl p-4"
+            type="search"
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="🔎 Search any expenses ............"
+          />
+        </form>
         <div className="grid grid-cols-5 font-semibold border-b pb-2">
           <span>SN.</span>
           <span>Description</span>
@@ -41,10 +68,10 @@ const ShowExpense = () => {
         </div>
 
         <div className="shadow-lg divide-y">
-          {expense.length === 0 && (
+          {filteredExpense.length === 0 && (
             <p className="p-10 text-2xl text-center">No expense yet</p>
           )}
-          {expense.map((item, index) => (
+          {filteredExpense.map((item, index) => (
             <div key={item.id} className="grid grid-cols-5 items-center py-2">
               <span>{index + 1}</span>
               <span>{item.description}</span>
@@ -54,10 +81,7 @@ const ShowExpense = () => {
                 <Button type="info" onClick={() => onHandleEdit(item)}>
                   Edit
                 </Button>
-                <Button
-                  type="danger"
-                  onClick={() => handleDeleteExpense(item.id)}
-                >
+                <Button type="danger" onClick={() => onHandleDelete(item.id)}>
                   Delete
                 </Button>
               </span>

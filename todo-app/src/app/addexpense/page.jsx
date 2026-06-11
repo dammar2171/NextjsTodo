@@ -29,9 +29,9 @@ function AddExpense() {
       );
 
       addToast(response.data.message, "success");
-      setDescription(" ");
-      setAmount(" ");
-      setDate(" ");
+      setDescription("");
+      setAmount("");
+      setDate("");
     } catch (error) {
       console.log("ERROR:", error);
       addToast(
@@ -53,6 +53,7 @@ function AddExpense() {
             </label>
             <Input
               id="description"
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Enter description"
               className="w-[100%] border-[1px] py-1 px-1.5 border-black rounded-md"
@@ -64,6 +65,7 @@ function AddExpense() {
             </label>
             <Input
               id="amount"
+              value={amount}
               type="number"
               placeholder="Enter amount"
               className="w-[100%] border-[1px] py-1 px-1.5 border-black rounded-md"
@@ -77,6 +79,7 @@ function AddExpense() {
             <Input
               id="date"
               type="date"
+              value={date}
               className="w-[100%] border-[1px] py-1 px-1.5 border-black rounded-md"
               onChange={(e) => setDate(e.target.value)}
             />
