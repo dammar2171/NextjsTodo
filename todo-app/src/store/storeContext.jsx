@@ -10,6 +10,12 @@ const expenseReducer = (state, action) => {
       return action.payload.expense;
     case "DELETE_EXPENSE":
       return state.filter((item) => item.id !== action.payload.id);
+    case "UPDATE_EXPENSE":
+      return state.map((item) =>
+        item.id == action.payload.updatedExpense.id
+          ? action.payload.updatedExpense
+          : item,
+      );
     default:
       return state;
   }
@@ -72,9 +78,22 @@ const StoreContextProvider = ({ children }) => {
     }
   };
 
+  const handleUpdateExpense = (updatedExpense) => {
+    dispatch({
+      type: "UPDATE_EXPENSE",
+      payload: {
+        updatedExpense,
+      },
+    });
+  };
   return (
     <StoreContext.Provider
-      value={{ expenseLoading, expense, handleDeleteExpense }}
+      value={{
+        expenseLoading,
+        expense,
+        handleDeleteExpense,
+        handleUpdateExpense,
+      }}
     >
       {children}
     </StoreContext.Provider>

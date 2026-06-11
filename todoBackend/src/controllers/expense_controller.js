@@ -33,7 +33,6 @@ export const fetchExpense = async (req,res) =>{
 
 export const deleteExpense = async(req,res)=>{
   const {id} = req.params;
-  console.log("ID : ",id);
   
   const userID = req.user.userId
   const sql = "DELETE FROM expenses where id = $1 AND user_id =$2;";
@@ -46,5 +45,21 @@ export const deleteExpense = async(req,res)=>{
   } catch (error) {
     console.log("DATABASE_ERROR: ",error);
     return res.status(500).json({message:"problem in deletion!"})
+  }
+}
+
+export const updateExpense = async(req,res)=>{
+  const {description,amount,date} = req.body;
+  const {id} = req.params;
+  const userID = req.user.userId;
+  const sql = "UPDATE expenses SET description = $1, amount = $2, date = $3 WHERE  id = $4 AND user_id = $5;";
+  try {
+    const result = await pool.query(sql,[description,amount,date,id,userID]);
+    if(result.rowCount === 0){
+      return res.status(400).json({message:"No data found for update"})
+    }
+    return res.status(200).json({data:result.rowCount,message:"Expense updated successfully"})
+  } catch (error) {
+   console.log("DATABASE_ERROR: ",error);
   }
 }
